@@ -40,7 +40,20 @@
         function getVideoIdFromPath() {
             const path = window.location.pathname;
             const parts = path.split('/');
-            return parts[parts.length - 1];
+            const videoId = parts[parts.length - 1];
+
+            // Check if videoId is valid and not an empty string
+            if (videoId && videoId !== 'index.html') {
+                return videoId;
+            }
+
+            // Check for video ID in hash (for handling URLs with #)
+            const hash = window.location.hash;
+            if (hash) {
+                return hash.substring(1); // Remove the # and return the video ID
+            }
+
+            return null;
         }
 
         function setVideoSrc(videoId) {
